@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
+import 'package:my_pocket/shared/theme.dart';
 import 'package:my_pocket/ui/pages/home_page.dart';
 import 'package:my_pocket/ui/pages/onBoardingPage.dart';
+import 'package:my_pocket/ui/pages/profile_page.dart';
 import 'package:my_pocket/ui/pages/sign_in_page.dart';
 import 'package:my_pocket/ui/pages/sign_up_id_page.dart';
 import 'package:my_pocket/ui/pages/sign_up_page.dart';
@@ -18,6 +20,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       //menghilangkan banner debug di simulator
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          scaffoldBackgroundColor: lightBackgroundColor,
+          appBarTheme: AppBarTheme(
+            backgroundColor: lightBackgroundColor,
+            elevation: 0,
+            centerTitle: true,
+            iconTheme: IconThemeData(color: blackColor),
+            titleTextStyle: blackTextStyle.copyWith(
+              fontSize: 20,
+              fontWeight: semiBold,
+            ),
+          )),
+
       routes: {
         '/': (context) => const SplashPage(),
         '/onboarding': (context) => const OnBoardingPage(),
@@ -27,6 +42,7 @@ class MyApp extends StatelessWidget {
         '/sign-up-set-id': (context) => const SignUpSetIdPage(),
         '/sign-up-success': (context) => const SignUpSuccessPage(),
         '/home': (context) => const HomePage(),
+        '/profile': (context) => const ProfilePage(),
       },
     );
   }
