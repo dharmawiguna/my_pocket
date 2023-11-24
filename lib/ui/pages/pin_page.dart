@@ -3,7 +3,7 @@ import 'package:my_pocket/shared/theme.dart';
 import 'package:my_pocket/ui/widget/button.dart';
 
 class PinPage extends StatefulWidget {
-  const PinPage({super.key});
+  const PinPage({Key? key}) : super(key: key);
 
   @override
   State<PinPage> createState() => _PinPageState();
@@ -17,6 +17,10 @@ class _PinPageState extends State<PinPage> {
       setState(() {
         pinController.text = pinController.text + number;
       });
+    }
+
+    if (pinController.text == '123456') {
+      Navigator.pop(context, true);
     }
   }
 
