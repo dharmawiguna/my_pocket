@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import 'package:my_pocket/shared/theme.dart';
 import 'package:my_pocket/ui/pages/home_page.dart';
 import 'package:my_pocket/ui/pages/onBoardingPage.dart';
+import 'package:my_pocket/ui/pages/pin_page.dart';
 import 'package:my_pocket/ui/pages/profile_page.dart';
 import 'package:my_pocket/ui/pages/sign_in_page.dart';
 import 'package:my_pocket/ui/pages/sign_up_id_page.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         '/sign-up-success': (context) => const SignUpSuccessPage(),
         '/home': (context) => const HomePage(),
         '/profile': (context) => const ProfilePage(),
+        '/pin': (context) => const PinPage(),
       },
     );
   }
