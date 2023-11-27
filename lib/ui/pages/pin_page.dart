@@ -112,13 +112,13 @@ class _PinPageState extends State<PinPage> {
                   CustomInputButton(
                     title: '6',
                     onTap: () {
-                      addPin('5');
+                      addPin('6');
                     },
                   ),
                   CustomInputButton(
                     title: '7',
                     onTap: () {
-                      addPin('6');
+                      addPin('7');
                     },
                   ),
                   CustomInputButton(
