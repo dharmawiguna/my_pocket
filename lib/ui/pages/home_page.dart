@@ -293,7 +293,9 @@ class HomePage extends StatelessWidget {
               HomeServiceItem(
                 iconUrl: 'assets/icon_withdraw.png',
                 title: "Widthdraw",
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, "/transfer");
+                },
               ),
               HomeServiceItem(
                 iconUrl: 'assets/icon_more.png',
