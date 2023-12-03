@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_pocket/shared/shared_methods.dart';
 import 'package:my_pocket/shared/theme.dart';
 import 'package:my_pocket/ui/widget/button.dart';
 import 'package:my_pocket/ui/widget/data_provider_item.dart';
@@ -55,7 +56,7 @@ class DataProviderPage extends StatelessWidget {
                     height: 2,
                   ),
                   Text(
-                    'Balance Rp. 2.000.000',
+                    'Balance ${formatCurrency(280000000)}',
                     style: greyTextStyle.copyWith(
                       fontSize: 12,
                       fontWeight: regular,

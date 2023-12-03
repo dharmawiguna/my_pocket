@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_pocket/shared/shared_methods.dart';
 import 'package:my_pocket/shared/theme.dart';
 import 'package:my_pocket/ui/widget/home_latest_transaction_item.dart';
 import 'package:my_pocket/ui/widget/home_service_item.dart';
@@ -200,7 +201,7 @@ class HomePage extends StatelessWidget {
             style: whiteTextStyle,
           ),
           Text(
-            "Rp. 200.000",
+            formatCurrency(10000),
             style: whiteTextStyle.copyWith(
               fontSize: 24,
               fontWeight: semiBold,
@@ -235,7 +236,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               Text(
-                "of Rp 200.000",
+                "of ${formatCurrency(2000)}",
                 style: blackTextStyle.copyWith(fontWeight: semiBold),
               ),
             ],
@@ -338,32 +339,32 @@ class HomePage extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               color: whiteColor,
             ),
-            child: const Column(
+            child: Column(
               children: [
                 HomeLatestTransactionItem(
                     iconUrl: "assets/icon_transaction_topup.png",
                     title: "Top Up",
-                    amount: "+ 500.000",
+                    amount: "+ ${formatCurrency(450000, symbol: "")}",
                     time: "Yesterday"),
                 HomeLatestTransactionItem(
                     iconUrl: "assets/icon_transaction_cashback.png",
                     title: "Cashback",
-                    amount: "+ 500.000",
+                    amount: "+ ${formatCurrency(500000, symbol: "")}",
                     time: "September 11"),
                 HomeLatestTransactionItem(
                     iconUrl: "assets/icon_transaction_withdraw.png",
                     title: "Withdraw",
-                    amount: "+ 500.000",
+                    amount: "+ ${formatCurrency(500000, symbol: "")}",
                     time: "Yesterday"),
                 HomeLatestTransactionItem(
                     iconUrl: "assets/icon_transaction_transfer.png",
                     title: "Transfer",
-                    amount: "+ 500.000",
+                    amount: "+ ${formatCurrency(500000, symbol: "")}",
                     time: "Yesterday"),
                 HomeLatestTransactionItem(
                     iconUrl: "assets/icon_transaction_electric.png",
                     title: "Electric",
-                    amount: "+ 500.000",
+                    amount: "+ ${formatCurrency(500000, symbol: "")}",
                     time: "Yesterday"),
               ],
             ),

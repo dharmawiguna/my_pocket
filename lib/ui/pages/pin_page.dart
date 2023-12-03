@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_pocket/shared/shared_methods.dart';
 import 'package:my_pocket/shared/theme.dart';
 import 'package:my_pocket/ui/widget/button.dart';
 
@@ -19,8 +20,12 @@ class _PinPageState extends State<PinPage> {
       });
     }
 
-    if (pinController.text == '123456') {
-      Navigator.pop(context, true);
+    if (pinController.text.length == 6) {
+      if (pinController.text == '123456') {
+        Navigator.pop(context, true);
+      } else {
+        showCustomSnackBar(context, "Pin is Wrong!");
+      }
     }
   }
 
