@@ -8,6 +8,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final contextLocal = context;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -78,8 +79,9 @@ class ProfilePage extends StatelessWidget {
                   iconUrl: 'assets/icon_edit_profile.png',
                   title: "Edit Profile",
                   onTap: () async {
-                    if (await Navigator.pushNamed(context, "/pin") == true) {
-                      Navigator.pushNamed(context, "/profile-edit");
+                    if (await Navigator.pushNamed(contextLocal, "/pin") ==
+                        true) {
+                      Navigator.pushNamed(contextLocal, "/profile-edit");
                     }
                   },
                 ),
@@ -87,8 +89,9 @@ class ProfilePage extends StatelessWidget {
                   iconUrl: 'assets/icon_my_pin.png',
                   title: "My Pin",
                   onTap: () async {
-                    if (await Navigator.pushNamed(context, "/pin") == true) {
-                      Navigator.pushNamed(context, "/profile-edit-pin");
+                    if (await Navigator.pushNamed(contextLocal, "/pin") ==
+                        true) {
+                      Navigator.pushNamed(contextLocal, "/profile-edit-pin");
                     }
                   },
                 ),
