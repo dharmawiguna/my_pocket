@@ -12,9 +12,7 @@ import 'package:my_pocket/ui/pages/profile_edit_pin_page.dart';
 import 'package:my_pocket/ui/pages/profile_edit_success_page.dart';
 import 'package:my_pocket/ui/pages/profile_page.dart';
 import 'package:my_pocket/ui/pages/sign_in_page.dart';
-import 'package:my_pocket/ui/pages/sign_up_id_page.dart';
 import 'package:my_pocket/ui/pages/sign_up_page.dart';
-import 'package:my_pocket/ui/pages/sign_up_profile_page.dart';
 import 'package:my_pocket/ui/pages/sign_up_success_page.dart';
 import 'package:my_pocket/ui/pages/splash_page.dart';
 import 'package:my_pocket/ui/pages/topup_amount_page.dart';
@@ -33,7 +31,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => AuthBloc())],
+      providers: [
+        BlocProvider(create: (context) => AuthBloc()..add(AuthGetCurrentUser()))
+      ],
       child: MaterialApp(
         //menghilangkan banner debug di simulator
         debugShowCheckedModeBanner: false,
