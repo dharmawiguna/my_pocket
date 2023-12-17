@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_pocket/shared/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class HomeTipsItem extends StatelessWidget {
   final String imageUrl;

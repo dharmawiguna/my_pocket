@@ -3,7 +3,6 @@ import 'package:my_pocket/shared/theme.dart';
 import 'package:my_pocket/ui/widget/button.dart';
 import 'package:my_pocket/ui/widget/form.dart';
 import 'package:my_pocket/ui/widget/package_item.dart';
-import 'package:my_pocket/ui/widget/transfer_result_user_item.dart';
 
 class DataPackagePage extends StatelessWidget {
   const DataPackagePage({super.key});
