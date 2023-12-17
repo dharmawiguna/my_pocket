@@ -2,8 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:my_pocket/models/sign_in_form_model.dart';
 import 'package:my_pocket/models/sign_up_form_model.dart';
+import 'package:my_pocket/models/user_edit_form_model.dart';
 import 'package:my_pocket/models/user_model.dart';
 import 'package:my_pocket/services/auth_service.dart';
+import 'package:my_pocket/services/user_service.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -59,6 +61,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           final UserModel user = await AuthService().login(data);
 
           emit(AuthSuccess(user));
+        } catch (e) {
+          emit(AuthFailed(e.toString()));
+        }
+      }
+
+      if (event is AuthUpdateUser) {
+        try {
+          if (state is AuthSuccess) {
+            final updatedUser = (state as AuthSuccess).user.copyWith(
+                  username: event.data.username,
+                  name: event.data.name,
+                  email: event.data.email,
+                  password: event.data.username,
+                );
+            emit(AuthLoading());
+            await UserService().updateUser(event.data);
+
+            emit(AuthSuccess(updatedUser));
+          }
         } catch (e) {
           emit(AuthFailed(e.toString()));
         }

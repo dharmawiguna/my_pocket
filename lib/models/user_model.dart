@@ -42,6 +42,7 @@ class UserModel {
 
   UserModel copyWith({
     String? username,
+    String? name,
     String? email,
     String? password,
     String? pin,
