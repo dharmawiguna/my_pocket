@@ -72,7 +72,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                   username: event.data.username,
                   name: event.data.name,
                   email: event.data.email,
-                  password: event.data.username,
+                  password: event.data.password,
                 );
             emit(AuthLoading());
             await UserService().updateUser(event.data);

@@ -35,123 +35,134 @@ class ProfilePage extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          return ListView(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24,
-            ),
-            children: [
-              const SizedBox(
-                height: 20,
+
+          if (state is AuthSuccess) {
+            return ListView(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 30,
-                  vertical: 22,
+              children: [
+                const SizedBox(
+                  height: 20,
                 ),
-                decoration: BoxDecoration(
-                  color: whiteColor,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      width: 120,
-                      height: 120,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: AssetImage(
-                            'assets/image_profile.png',
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 30,
+                    vertical: 22,
+                  ),
+                  decoration: BoxDecoration(
+                    color: whiteColor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 120,
+                        height: 120,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: state.user.profilePicture == null
+                                ? const AssetImage(
+                                    'assets/image_profile.png',
+                                  )
+                                : NetworkImage(state.user.profilePicture!)
+                                    as ImageProvider,
                           ),
                         ),
+                        child: state.user.verified == 1
+                            ? Align(
+                                alignment: Alignment.topRight,
+                                child: Container(
+                                  width: 28,
+                                  height: 28,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: whiteColor),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.check_circle,
+                                      color: greenColor,
+                                      size: 24,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : null,
                       ),
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: Container(
-                          width: 28,
-                          height: 28,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: whiteColor),
-                          child: Center(
-                            child: Icon(
-                              Icons.check_circle,
-                              color: greenColor,
-                              size: 24,
-                            ),
-                          ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Text(
+                        state.user.name.toString(),
+                        style: blackTextStyle.copyWith(
+                          fontSize: 18,
+                          fontWeight: medium,
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                      'Dharma Wiguna',
-                      style: blackTextStyle.copyWith(
-                        fontSize: 18,
-                        fontWeight: medium,
+                      const SizedBox(
+                        height: 40,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    ProfileMenuItem(
-                      iconUrl: 'assets/icon_edit_profile.png',
-                      title: "Edit Profile",
-                      onTap: () async {
-                        if (await Navigator.pushNamed(contextLocal, "/pin") ==
-                            true) {
-                          Navigator.pushNamed(contextLocal, "/profile-edit");
-                        }
-                      },
-                    ),
-                    ProfileMenuItem(
-                      iconUrl: 'assets/icon_my_pin.png',
-                      title: "My Pin",
-                      onTap: () async {
-                        if (await Navigator.pushNamed(contextLocal, "/pin") ==
-                            true) {
-                          Navigator.pushNamed(
-                              contextLocal, "/profile-edit-pin");
-                        }
-                      },
-                    ),
-                    ProfileMenuItem(
-                      iconUrl: 'assets/icon_wallet_setting.png',
-                      title: "Wallet Settings",
-                      onTap: () {},
-                    ),
-                    ProfileMenuItem(
-                      iconUrl: 'assets/icon_my_reward.png',
-                      title: "My Rewards",
-                      onTap: () {},
-                    ),
-                    ProfileMenuItem(
-                      iconUrl: 'assets/icon_help.png',
-                      title: "Help Center",
-                      onTap: () {},
-                    ),
-                    ProfileMenuItem(
-                      iconUrl: 'assets/icon_logout.png',
-                      title: "Log out",
-                      onTap: () {
-                        context.read<AuthBloc>().add(
-                              AuthLogout(),
-                            );
-                      },
-                    ),
-                  ],
+                      ProfileMenuItem(
+                        iconUrl: 'assets/icon_edit_profile.png',
+                        title: "Edit Profile",
+                        onTap: () async {
+                          if (await Navigator.pushNamed(contextLocal, "/pin") ==
+                              true) {
+                            Navigator.pushNamed(contextLocal, "/profile-edit");
+                          }
+                        },
+                      ),
+                      ProfileMenuItem(
+                        iconUrl: 'assets/icon_my_pin.png',
+                        title: "My Pin",
+                        onTap: () async {
+                          if (await Navigator.pushNamed(contextLocal, "/pin") ==
+                              true) {
+                            Navigator.pushNamed(
+                                contextLocal, "/profile-edit-pin");
+                          }
+                        },
+                      ),
+                      ProfileMenuItem(
+                        iconUrl: 'assets/icon_wallet_setting.png',
+                        title: "Wallet Settings",
+                        onTap: () {},
+                      ),
+                      ProfileMenuItem(
+                        iconUrl: 'assets/icon_my_reward.png',
+                        title: "My Rewards",
+                        onTap: () {},
+                      ),
+                      ProfileMenuItem(
+                        iconUrl: 'assets/icon_help.png',
+                        title: "Help Center",
+                        onTap: () {},
+                      ),
+                      ProfileMenuItem(
+                        iconUrl: 'assets/icon_logout.png',
+                        title: "Log out",
+                        onTap: () {
+                          context.read<AuthBloc>().add(
+                                AuthLogout(),
+                              );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              CustomTextButton(
-                title: "Report a Problem",
-                onPressed: () {},
-              )
-            ],
-          );
+                const SizedBox(
+                  height: 50,
+                ),
+                CustomTextButton(
+                  title: "Report a Problem",
+                  onPressed: () {},
+                )
+              ],
+            );
+          }
+
+          return Container();
         },
       ),
     );
