@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_pocket/blocs/auth/auth_bloc.dart';
 import 'package:my_pocket/blocs/payment_method/payment_method_bloc.dart';
 import 'package:my_pocket/models/payment_method_model.dart';
+import 'package:my_pocket/models/topup_form_model.dart';
 import 'package:my_pocket/shared/theme.dart';
+import 'package:my_pocket/ui/pages/topup_amount_page.dart';
 import 'package:my_pocket/ui/widget/bank_item.dart';
 import 'package:my_pocket/ui/widget/button.dart';
 
@@ -126,21 +128,29 @@ class _TopUpPageState extends State<TopUpPage> {
           const SizedBox(
             height: 12,
           ),
-          if (selectedPaymentMethod != null)
-            CustomFilledButton(
-              title: "Continue",
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  '/topup-amount',
-                );
-              },
-            ),
-          const SizedBox(
-            height: 70,
-          ),
         ],
       ),
+      floatingActionButton: (selectedPaymentMethod != null)
+          ? Container(
+              margin: const EdgeInsets.all(24),
+              child: CustomFilledButton(
+                title: "Continue",
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TopupAmountPage(
+                        data: TopupFormModel(
+                          paymentMethodCode: selectedPaymentMethod?.code,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            )
+          : Container(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
