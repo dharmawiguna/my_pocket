@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:my_pocket/models/user_model.dart';
 import 'package:my_pocket/shared/theme.dart';
 
-class TransferResentUserItem extends StatelessWidget {
-  final String imageUrl;
-  final String name;
-  final String username;
-  final bool isVerified;
+class TransferRecentUserItem extends StatelessWidget {
+  final UserModel user;
 
-  const TransferResentUserItem({
+  const TransferRecentUserItem({
     Key? key,
-    required this.imageUrl,
-    required this.name,
-    required this.username,
-    this.isVerified = false,
+    required this.user,
   }) : super(key: key);
 
   @override
@@ -41,9 +36,11 @@ class TransferResentUserItem extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
-                image: AssetImage(
-                  imageUrl,
-                ),
+                image: user.profilePicture == null
+                    ? const AssetImage(
+                        'assets/image_profile.png',
+                      )
+                    : NetworkImage(user.profilePicture!) as ImageProvider,
               ),
             ),
           ),
@@ -51,7 +48,7 @@ class TransferResentUserItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                name,
+                user.name.toString(),
                 style: blackTextStyle.copyWith(
                   fontSize: 16,
                   fontWeight: medium,
@@ -61,7 +58,7 @@ class TransferResentUserItem extends StatelessWidget {
                 height: 2,
               ),
               Text(
-                '@$username',
+                '@${user.name}',
                 style: greyTextStyle.copyWith(
                   fontWeight: medium,
                   fontSize: 12,
@@ -71,7 +68,7 @@ class TransferResentUserItem extends StatelessWidget {
           ),
           const Spacer(),
           //spacer digunakan untuk menggunakan ruang yang terisa sebaga pengganti widget row
-          if (isVerified)
+          if (user.verified == 1)
             Row(
               children: [
                 Icon(
