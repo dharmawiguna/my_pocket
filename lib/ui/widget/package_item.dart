@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:my_pocket/models/data_plan_model.dart';
 import 'package:my_pocket/shared/shared_methods.dart';
 import 'package:my_pocket/shared/theme.dart';
 
 class PackageItem extends StatelessWidget {
-  final int amount;
-  final int price;
+  final DataPlanModel dataPlan;
   final bool isSelected;
 
   const PackageItem({
     Key? key,
-    required this.amount,
-    required this.price,
+    required this.dataPlan,
     this.isSelected = false,
   }) : super(key: key);
 
@@ -40,7 +39,7 @@ class PackageItem extends StatelessWidget {
             height: 13,
           ),
           Text(
-            '${amount}GB',
+            dataPlan.name.toString(),
             style: blackTextStyle.copyWith(
               fontSize: 32,
               fontWeight: medium,
@@ -50,7 +49,7 @@ class PackageItem extends StatelessWidget {
             height: 2,
           ),
           Text(
-            formatCurrency(price),
+            formatCurrency(dataPlan.price ?? 0),
             style: greyTextStyle.copyWith(fontSize: 12),
           )
         ],
