@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_pocket/blocs/auth/auth_bloc.dart';
+import 'package:my_pocket/blocs/tip/tip_bloc.dart';
+import 'package:my_pocket/blocs/transaction/transaction_bloc.dart';
+import 'package:my_pocket/blocs/user/user_bloc.dart';
+import 'package:my_pocket/models/transfer_form_model.dart';
 import 'package:my_pocket/shared/shared_methods.dart';
 import 'package:my_pocket/shared/theme.dart';
+import 'package:my_pocket/ui/pages/transfer_amount_page.dart';
 import 'package:my_pocket/ui/widget/home_latest_transaction_item.dart';
 import 'package:my_pocket/ui/widget/home_service_item.dart';
 import 'package:my_pocket/ui/widget/home_tips_item.dart';
@@ -362,34 +367,23 @@ class HomePage extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               color: whiteColor,
             ),
-            child: Column(
-              children: [
-                HomeLatestTransactionItem(
-                    iconUrl: "assets/icon_transaction_topup.png",
-                    title: "Top Up",
-                    amount: "+ ${formatCurrency(450000, symbol: "")}",
-                    time: "Yesterday"),
-                HomeLatestTransactionItem(
-                    iconUrl: "assets/icon_transaction_cashback.png",
-                    title: "Cashback",
-                    amount: "+ ${formatCurrency(500000, symbol: "")}",
-                    time: "September 11"),
-                HomeLatestTransactionItem(
-                    iconUrl: "assets/icon_transaction_withdraw.png",
-                    title: "Withdraw",
-                    amount: "+ ${formatCurrency(500000, symbol: "")}",
-                    time: "Yesterday"),
-                HomeLatestTransactionItem(
-                    iconUrl: "assets/icon_transaction_transfer.png",
-                    title: "Transfer",
-                    amount: "+ ${formatCurrency(500000, symbol: "")}",
-                    time: "Yesterday"),
-                HomeLatestTransactionItem(
-                    iconUrl: "assets/icon_transaction_electric.png",
-                    title: "Electric",
-                    amount: "+ ${formatCurrency(500000, symbol: "")}",
-                    time: "Yesterday"),
-              ],
+            child: BlocProvider(
+              create: (context) => TransactionBloc()..add(TransactionGet()),
+              child: BlocBuilder<TransactionBloc, TransactionState>(
+                builder: (context, state) {
+                  if (state is TransactionSuccess) {
+                    return Column(
+                      children: state.transactions.map((transaction) {
+                        return HomeLatestTransactionItem(
+                            transaction: transaction);
+                      }).toList(),
+                    );
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
             ),
           ),
         ],
@@ -415,27 +409,39 @@ class HomePage extends StatelessWidget {
           const SizedBox(
             height: 14,
           ),
-          const SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                HomeUserItem(
-                  imageUrl: "assets/image_profile.png",
-                  username: 'I',
-                ),
-                HomeUserItem(
-                  imageUrl: "assets/image_profile.png",
-                  username: 'Made',
-                ),
-                HomeUserItem(
-                  imageUrl: "assets/image_profile.png",
-                  username: 'Putra',
-                ),
-                HomeUserItem(
-                  imageUrl: "assets/image_profile.png",
-                  username: 'Dharma',
-                ),
-              ],
+          BlocProvider(
+            create: (context) => UserBloc()..add(UserGetRecent()),
+            child: BlocBuilder<UserBloc, UserState>(
+              builder: (context, state) {
+                if (state is UserSuccess) {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: state.users.map((user) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TransferAmountPage(
+                                  data: TransferFormModel(
+                                    sendTo: user.username,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          child: HomeUserItem(user: user),
+                        );
+                      }).toList(),
+                    ),
+                  );
+                }
+
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             ),
           ),
         ],
@@ -459,27 +465,24 @@ class HomePage extends StatelessWidget {
           const SizedBox(
             height: 14,
           ),
-          const Wrap(
-            spacing: 17,
-            runSpacing: 18,
-            children: [
-              HomeTipsItem(
-                  imageUrl: "assets/image_tips1.png",
-                  title: "Best tips for using a credit card",
-                  url: "https://goole.com"),
-              HomeTipsItem(
-                  imageUrl: "assets/image_tips1.png",
-                  title: "Best tips for using a credit card",
-                  url: "https://goole.com"),
-              HomeTipsItem(
-                  imageUrl: "assets/image_tips1.png",
-                  title: "Best tips for using a credit card",
-                  url: "https://goole.com"),
-              HomeTipsItem(
-                  imageUrl: "assets/image_tips1.png",
-                  title: "Best tips for using a credit card",
-                  url: "https://goole.com"),
-            ],
+          BlocProvider(
+            create: (context) => TipBloc()..add(TipGet()),
+            child: BlocBuilder<TipBloc, TipState>(
+              builder: (context, state) {
+                if (state is TipSuccess) {
+                  return Wrap(
+                      spacing: 17,
+                      runSpacing: 18,
+                      children: state.tips.map((tip) {
+                        return HomeTipsItem(tip: tip);
+                      }).toList());
+                }
+
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ),
           )
         ],
       ),

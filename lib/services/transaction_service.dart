@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:my_pocket/models/data_plan_form_model.dart';
 import 'package:my_pocket/models/topup_form_model.dart';
+import 'package:my_pocket/models/transaction_model.dart';
 import 'package:my_pocket/models/transfer_form_model.dart';
 import 'package:my_pocket/services/auth_service.dart';
 import 'package:my_pocket/shared/shared_values.dart';
@@ -71,6 +72,32 @@ class TransactionService {
       if (res.statusCode != 200) {
         throw jsonDecode(res.body)['message'];
       }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<TransactionModel>> getTransactions() async {
+    try {
+      final token = await AuthService().getToken();
+
+      final res = await http.get(
+          Uri.parse(
+            '$baseUrl/transactions',
+          ),
+          headers: {'Authorization': token});
+
+      if (res.statusCode == 200) {
+        return List<TransactionModel>.from(
+          jsonDecode(res.body)['data'].map(
+            (transaction) => TransactionModel.fromJson(transaction),
+          ),
+        ).toList();
+      }
+
+      print(jsonDecode(res.body)['data']);
+
+      throw jsonDecode(res.body)['message'];
     } catch (e) {
       rethrow;
     }
